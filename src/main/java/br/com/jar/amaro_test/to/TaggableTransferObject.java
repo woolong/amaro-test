@@ -1,37 +1,51 @@
 package br.com.jar.amaro_test.to;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public abstract class TaggableTransferObject<T extends TaggableTransferObject> {
+public abstract class TaggableTransferObject<T extends TaggableTransferObject<?>> {
 
-    private List<String> tags;
-    private List<Integer> tagsVector;
+	private List<String> tags;
+	private List<Integer> tagsVector;
+	private Double similarity;
 
-    public List<String> getTags() {
-        return tags;
-    }
+	public TaggableTransferObject() {
+		super();
+	}
 
-    public void setTags(List<String> tags) {
-        this.tags = tags;
-    }
+	@SuppressWarnings("unchecked")
+	public T addTag(String tag) {
+		if (this.tags == null) {
+			this.tags = new ArrayList<String>();
+		}
 
-    public List<Integer> getTagsVector() {
-        return tagsVector;
-    }
+		this.tags.add(tag);
 
-    public void setTagsVector(List<Integer> tagsVector) {
-        this.tagsVector = tagsVector;
-    }
+		return (T) this;
+	}
 
-    public T addTag(String tag) {
-        if (this.tags == null) {
-            this.tags = new ArrayList<String>();
-        }
+	public List<String> getTags() {
+		return tags;
+	}
 
-        this.tags.add(tag);
+	public void setTags(List<String> tags) {
+		this.tags = tags;
+	}
 
-        return (T) this;
-    }
+	public List<Integer> getTagsVector() {
+		return tagsVector;
+	}
+
+	public void setTagsVector(List<Integer> tagsVector) {
+		this.tagsVector = tagsVector;
+	}
+
+	public Double getSimilarity() {
+		return similarity;
+	}
+
+	public void setSimilarity(Double similarity) {
+		this.similarity = similarity;
+	}
+
 }

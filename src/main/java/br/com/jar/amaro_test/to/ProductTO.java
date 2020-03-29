@@ -2,25 +2,41 @@ package br.com.jar.amaro_test.to;
 
 public class ProductTO extends TaggableTransferObject<ProductTO> {
 
-    private final Long id;
-    private String name;
+	private Long id;
+	private String name;
 
-    public ProductTO(Long id, String name) {
-        super();
-        this.id = id;
-        this.name = name;
-    }
+	public ProductTO() {
+	}
 
-    public Long getId() {
-        return id;
-    }
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ProductTO [id=");
+		builder.append(id);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", getTags()=");
+		builder.append(getTags());
+		builder.append(", getTagsVector()=");
+		builder.append(getTagsVector());
+		builder.append("]");
+		return builder.toString();
+	}
 
-    public String getName() {
-        return name;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }
-

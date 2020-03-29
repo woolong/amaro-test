@@ -1,28 +1,35 @@
 package br.com.jar.amaro_test.bo;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
+import java.util.function.Predicate;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.jar.amaro_test.bo.model.Products;
 import br.com.jar.amaro_test.to.ProductTO;
 
 @Service
 public class ProductsBusiness {
 
-	public List<ProductTO> findAll() {
-		final List<String> names = Arrays.asList("Produto 1", "Produto 2");
-		final AtomicLong counter = new AtomicLong();
+	@Autowired
+	private Products products;
 
-		final List<ProductTO> tos = names.stream().map(name -> {
-			return new ProductTO(counter.incrementAndGet(), name).addTag("nice").addTag("vintage");
-		}).collect(Collectors.toList());
-		return tos;
+	public List<ProductTO> findAll() {
+		return products.findAll();
+	}
+
+	public List<ProductTO> findAllWithTagsVector() {
+		return products.findAllWithTagsVector();
 	}
 
 	public ProductTO findByPk(long id) {
-		return new ProductTO(id, "Produto");
+		return products.findByPk(id);
+	}
+
+	public List<ProductTO> findSimilarityByTags(ProductTO obj, List<ProductTO> listToCompare) {
+		Predicate<ProductTO> filter = o -> !o.getId().equals(obj.getId());
+
+		return products.findSimilarsByEuclideanDistance(obj, listToCompare, filter);
 	}
 }
