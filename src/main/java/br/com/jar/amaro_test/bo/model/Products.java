@@ -13,6 +13,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.jar.amaro_test.to.ProductTO;
 
+/**
+ * Encapsulates access to {@link ProductTO} instances.
+ * 
+ * @author raphael
+ *
+ */
 @Service
 public class Products extends TaggableModel<ProductTO> {
 
@@ -27,7 +33,7 @@ public class Products extends TaggableModel<ProductTO> {
 				ALL.put(to.getId(), to);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new Error("Product list could not be imported!", e);
 		}
 	}
 

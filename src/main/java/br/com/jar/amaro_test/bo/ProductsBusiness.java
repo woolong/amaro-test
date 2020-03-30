@@ -9,6 +9,12 @@ import org.springframework.stereotype.Service;
 import br.com.jar.amaro_test.bo.model.Products;
 import br.com.jar.amaro_test.to.ProductTO;
 
+/**
+ * Encapsulates business logic for Products.
+ * 
+ * @author raphael
+ *
+ */
 @Service
 public class ProductsBusiness {
 
@@ -28,7 +34,7 @@ public class ProductsBusiness {
 	}
 
 	public List<ProductTO> findSimilarityByTags(ProductTO obj, List<ProductTO> listToCompare) {
-		Predicate<ProductTO> filter = o -> !o.getId().equals(obj.getId());
+		final Predicate<ProductTO> filter = o -> !o.getId().equals(obj.getId());
 
 		return products.findSimilarsByEuclideanDistance(obj, listToCompare, filter);
 	}

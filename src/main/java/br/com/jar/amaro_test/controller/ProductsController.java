@@ -15,7 +15,11 @@ import br.com.jar.amaro_test.to.ProductTO;
 @RestController
 public class ProductsController {
 
-	public static final String BASE_URL = "/products";
+	private static final String BASE_URL = "/products";
+	public static final String URL_FINDALL = BASE_URL;
+	public static final String URL_FINDBYPK = BASE_URL + "/{id}";
+	public static final String URL_TAGSVECTOR = BASE_URL + "/tagsVector";
+	public static final String URL_SIMILARITY_BY_TAGS = BASE_URL + "/{id}/similarity/tags";
 
 	@Autowired
 	private ProductsBusiness productsBusiness;
@@ -25,23 +29,22 @@ public class ProductsController {
 		return productsBusiness.findAll();
 	}
 
-	public List<ProductTO> map() {
-		return productsBusiness.findAll();
-	}
-
-	@GetMapping(BASE_URL + "/tagsVector")
+	@GetMapping(URL_TAGSVECTOR)
 	public List<ProductTO> allTagsVector() {
 		return productsBusiness.findAllWithTagsVector();
 	}
 
-	@GetMapping(BASE_URL + "/{id}")
+	@GetMapping(URL_FINDBYPK)
 	public ProductTO all(@PathVariable long id) {
 		return productsBusiness.findByPk(id);
 	}
 
-	@PostMapping(BASE_URL + "/{id}/similarity/tags")
+	@PostMapping(URL_SIMILARITY_BY_TAGS)
 	public List<ProductTO> similarityTags(@PathVariable long id, @RequestBody List<ProductTO> otherProducts) {
 		final ProductTO obj = productsBusiness.findByPk(id);
+		if (obj == null) {
+			return null;
+		}
 		return productsBusiness.findSimilarityByTags(obj, otherProducts);
 	}
 }

@@ -1,6 +1,9 @@
 package br.com.jar.amaro_test.to;
 
-public class ProductTO extends TaggableTransferObject<ProductTO> {
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ProductTO extends TaggableTransferObject<ProductTO> implements Cloneable {
 
 	private Long id;
 	private String name;
@@ -21,6 +24,18 @@ public class ProductTO extends TaggableTransferObject<ProductTO> {
 		builder.append(getTagsVector());
 		builder.append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		final TaggableTransferObject<?> father = (TaggableTransferObject<?>) super.clone();
+		final ProductTO clone = new ProductTO();
+		clone.setTags(father.getTags());
+		clone.setTagsVector(father.getTagsVector());
+		clone.id = this.id;
+		clone.name = this.name;
+
+		return father;
 	}
 
 	public Long getId() {
